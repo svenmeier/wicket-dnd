@@ -1,0 +1,86 @@
+div.performance {
+	background: #f5f5b5;
+	border: 2px solid #e7a45e;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 4px;
+}
+
+div.performance h3 {
+	padding: 4px;
+	margin: 0px;
+}
+
+div.controls {
+	float: right;
+}
+div.clearer {
+	clear: both;
+}
+
+div.labelContainer {
+	width: 64px;
+	height: 64px;
+	border: 1px dotted black;
+}
+div.labelContainer span {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+div.vertical {
+	width: 50%;
+}
+div.vertical div.item {
+	padding-right: 8px;
+	border-top: 1px solid #eeeeee;
+	border-right: 1px solid #bbbbbb;
+	border-bottom: 1px solid #bbbbbb;
+	border-left: 1px solid #eeeeee;
+	background: #dddddd;
+}
+div.horizontal {
+	width: 50%;
+}
+div.horizontal div.item {
+	float:left;
+	padding-right: 16px;
+	border-top: 1px solid #eeeeee;
+	border-right: 1px solid #bbbbbb;
+	border-bottom: 1px solid #bbbbbb;
+	border-left: 1px solid #eeeeee;
+	background: #dddddd;
+}
+span.initiate {
+	padding-left: 8px;
+	background: url(initiate.gif) no-repeat center center;
+}
+
+.treeContainer {
+	min-height: 10px;
+	width: 50%;
+	border: 1px dotted black;
+}
+
+table {
+	border-spacing: 0px;
+	border-collapse:collapse;
+}
+
+tr.even {
+	background: #eeeeee;
+}
+
+div.scroller {
+	height: 240px;
+	width: 240px;
+	overflow: scroll;
+	/* must be relative too or nested table's overflow will not be hidden on IE8 */
+	position: relative;
+}
+
+div.scroller table {
+	width: 480px;
+}
