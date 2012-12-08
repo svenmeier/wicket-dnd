@@ -3,12 +3,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+      <groupId>org.sonatype.oss</groupId>
+      <artifactId>oss-parent</artifactId>
+      <version>7</version>
+    </parent>
     <groupId>com.github.wicket-dnd</groupId>
     <artifactId>wicket-dnd-parent</artifactId>
     <version>0.6-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Wicket Drag and Drop Parent</name>
     <description>Wicket Drag and Drop.</description>
+    <url>http://github.com/svenmeier/wicket-dnd</url>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -129,6 +135,19 @@
 				    <downloadSources>true</downloadSources>
 			    </configuration>
 		    </plugin>		    
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -151,6 +170,17 @@
         <url>http://github.com/svenmeier/wicket-dnd</url>
         <tag>master</tag>
     </scm> 
+
+    <developers>
+        <developer>
+            <id>svenmeier</id>
+            <name>Sven Meier</name>
+            <email>sven@meiers.net</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
 
     <issueManagement>
         <url>http://github.com/svenmeier/wicket-dnd/issues</url>
