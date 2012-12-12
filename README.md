@@ -32,7 +32,7 @@ Enable a component as a source of drags:
       }
     }.drag("tr"));
 
-In this example only a MOVE operation is allowed. Drags are initiated on `<tr> tags.
+In this example only a MOVE operation is allowed. Drags are initiated on ´<tr>´ tags.
 
 Drop target
 -----------
