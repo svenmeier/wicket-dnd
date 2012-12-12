@@ -1,13 +1,13 @@
 wicket-dnd
 ==========
 
-A generic Drag&Drop framework for [http://wicket.apache.org Wicket]:
+A generic Drag&Drop framework for [Wicket](http://wicket.apache.org):
 
 - operate on any markup element via selectors
 - drag and drop between any Wicket components
-- vertical, horizontal and hierarchical structured markup (i.e. [http://code.google.com/p/wicket-tree/ trees])
+- vertical, horizontal and hierarchical structured markup
 - drag initiators (a.k.a. handles)
-- common desktop metaphors with 'MOVE', 'COPY' and 'LINK' [http://code.google.com/p/wicket-dnd/source/browse/trunk/wicket-dnd/src/main/java/wicketdnd/Operation.java operations]
+- common desktop metaphors with 'MOVE', 'COPY' and 'LINK' operations
 - transfer types
 - themeable
 - works in Firefox, Safari, Chrome, Opera
@@ -47,3 +47,12 @@ Enable a component as a target for drops:
 
 In this example MOVE and COPY operations are allowed. Drops are performed on center of `<tr>` tags,
 the location holds a reference to the actual component and the anchor the transfer was dropped on.
+
+Maven dependency
+----------------
+
+    <dependency>
+      <groupId>com.github.svenmeier.wicket-dnd</groupId>
+      <artifactId>wicket-dnd</artifactId>
+      <version>0.6-SNAPSHOT</version>
+    </dependency>
