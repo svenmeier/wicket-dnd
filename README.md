@@ -21,7 +21,7 @@ Themes
 
 You have to add a theme (build-in or your own) to your component you want to enable for DnD, e.g.
 
-    add(new WindowsTheme());
+    container.add(new WindowsTheme());
 
 Drag source
 -----------
