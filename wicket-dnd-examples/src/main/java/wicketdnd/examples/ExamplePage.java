@@ -18,6 +18,9 @@ package wicketdnd.examples;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
@@ -59,7 +62,7 @@ public class ExamplePage extends WebPage
 			{
 				super.onConfigure();
 				
-				setVisible(getRequest().getClientUrl().toString().contains("appspot.com"));
+				setVisible(((HttpServletRequest)getRequest().getContainerRequest()).getServerName().contains("appspot.com"));
 			}
 		});
 		
