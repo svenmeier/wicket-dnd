@@ -1,15 +1,10 @@
-div.performance {
+p.performance {
 	background: #f5f5b5;
 	border: 2px solid #e7a45e;
 	width: 50%;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 4px;
-}
-
-div.performance h3 {
-	padding: 4px;
-	margin: 0px;
 }
 
 div.controls {

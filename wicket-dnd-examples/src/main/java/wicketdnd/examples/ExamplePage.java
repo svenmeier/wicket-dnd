@@ -22,6 +22,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -52,6 +53,16 @@ public class ExamplePage extends WebPage
 		add(new IECursorFix());
 		add(new IEBackgroundImageCacheFix());
 
+		add(new WebMarkupContainer("performance") {
+			@Override
+			protected void onConfigure()
+			{
+				super.onConfigure();
+				
+				setVisible(getRequest().getClientUrl().toString().contains("appspot.com"));
+			}
+		});
+		
 		// for a static theme just add a theme like the following:
 		// form.add(new WebTheme()));
 		
