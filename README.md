@@ -9,7 +9,7 @@ A generic Drag&Drop framework for [Wicket](http://wicket.apache.org):
 - drag and drop between any Wicket components
 - vertical, horizontal and hierarchical structured markup
 - drag initiators (a.k.a. handles)
-- common desktop metaphors with 'MOVE', 'COPY' and 'LINK' operations
+- common desktop metaphors with `MOVE`, `COPY` and `LINK` operations
 - transfer types
 - themeable
 - works in Firefox, Safari, Chrome, Opera
