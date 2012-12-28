@@ -29,6 +29,7 @@
 		<jetty.version>7.6.3.v20120416</jetty.version>
 		<slf4j.version>1.6.4</slf4j.version>
 		<log4j.version>1.2.16</log4j.version>
+		<yuicompressor.version>1.3.0</yuicompressor.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
@@ -159,6 +160,23 @@
 						<scanIntervalSeconds>60</scanIntervalSeconds>
 						<webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>net.alchim31.maven</groupId>
+					<artifactId>yuicompressor-maven-plugin</artifactId>
+					<version>${yuicompressor.version}</version>
+					<configuration>
+						<statistics>true</statistics>
+						<jswarn>false</jswarn>
+						<suffix>.min</suffix>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>compress</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
