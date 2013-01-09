@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.github.svenmeier.wicket-dnd</groupId>
 	<artifactId>wicket-dnd-parent</artifactId>
-	<version>0.6.0</version>
+	<version>0.6.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Wicket Drag and Drop Parent</name>
 	<description>Wicket Drag and Drop.</description>
