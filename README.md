@@ -53,13 +53,22 @@ the location holds a reference to the actual component and the anchor the transf
 Maven dependency
 ----------------
 
+Releases are available on [Maven central](http://repo1.maven.org/maven2/com/github/svenmeier/wicket-dnd)
+and [OSS Sonatype](https://oss.sonatype.org/content/repositories/releases/com/github/svenmeier/wicket-dnd).
+
     <dependency>
       <groupId>com.github.svenmeier.wicket-dnd</groupId>
       <artifactId>wicket-dnd</artifactId>
-      <version>0.6-SNAPSHOT</version>
+      <version>0.6.0</version>
     </dependency>
 
 For snapshot releases you have to use the [OSS Sonatype Snapshot repository](https://oss.sonatype.org/content/repositories/snapshots/com/github/svenmeier/wicket-dnd/):
+
+    <dependency>
+      <groupId>com.github.svenmeier.wicket-dnd</groupId>
+      <artifactId>wicket-dnd</artifactId>
+      <version>0.6.1-SNAPSHOT</version>
+    </dependency>
 
     <repository>
       <id>sonatype-snapshots</id>
@@ -68,6 +77,3 @@ For snapshot releases you have to use the [OSS Sonatype Snapshot repository](htt
         <enabled>true</enabled>
       </snapshots>		
     </repository>
-
-Releases will soon be available on [Maven central](http://repo1.maven.org/maven2/com/github/svenmeier/wicket-dnd)
-and [OSS Sonatype](https://oss.sonatype.org/content/repositories/releases/com/github/svenmeier/wicket-dnd).
