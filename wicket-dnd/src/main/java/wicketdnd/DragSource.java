@@ -150,6 +150,16 @@ public class DragSource extends Behavior
 		component.setOutputMarkupId(true);
 	}
 
+	/**
+	 * Get the identifying path of this drag source.
+	 * 
+	 * @return path in page
+	 */
+	public String getPath()
+	{
+		return component.getPageRelativePath();
+	}
+
 	@Override
 	public final void renderHead(Component c, IHeaderResponse response)
 	{
@@ -165,9 +175,11 @@ public class DragSource extends Behavior
 		final String id = component.getMarkupId();
 		final String path = component.getPageRelativePath();
 
-		String initJS = String.format("wicketdnd.dragSource('%s','%s',%s,%s,{'select':'%s','initiate':'%s','clone':'%s'});",
-				id, path, new CollectionFormattable(getOperations()), new CollectionFormattable(
-						getTypes()), selector, initiateSelector, cloneSelector);
+		String initJS = String
+				.format("wicketdnd.dragSource('%s','%s',%s,%s,{'select':'%s','initiate':'%s','clone':'%s'});",
+						id, path, new CollectionFormattable(getOperations()),
+						new CollectionFormattable(getTypes()), selector, initiateSelector,
+						cloneSelector);
 		response.render(OnDomReadyHeaderItem.forScript(initJS));
 	}
 
@@ -175,7 +187,7 @@ public class DragSource extends Behavior
 	public void onComponentTag(Component component, ComponentTag tag)
 	{
 		super.onComponentTag(component, tag);
-		
+
 		tag.append("class", "dnd-drag-source", " ");
 	}
 
