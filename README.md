@@ -67,7 +67,7 @@ For snapshot releases you have to use the [OSS Sonatype Snapshot repository](htt
     <dependency>
       <groupId>com.github.svenmeier.wicket-dnd</groupId>
       <artifactId>wicket-dnd</artifactId>
-      <version>0.6.1-SNAPSHOT</version>
+      <version>0.6.0-SNAPSHOT</version>
     </dependency>
 
     <repository>
