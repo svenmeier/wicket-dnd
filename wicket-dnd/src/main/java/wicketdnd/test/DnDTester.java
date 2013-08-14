@@ -134,11 +134,11 @@ public class DnDTester
 		List<T> behaviors = component.getBehaviors(clazz);
 		if (behaviors.size() == 0)
 		{
-			throw new WicketRuntimeException("no drop target");
+			throw new WicketRuntimeException("no behavior of type " + clazz.getName());
 		}
 		else if (behaviors.size() > 1)
 		{
-			throw new WicketRuntimeException("multiple drop targets");
+			throw new WicketRuntimeException("multiple behaviors of type " + clazz.getName());
 		}
 
 		return behaviors.get(0);
