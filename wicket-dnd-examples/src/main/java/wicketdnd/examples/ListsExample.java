@@ -19,7 +19,9 @@ import java.util.Set;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.IAjaxIndicatorAware;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
+import org.apache.wicket.extensions.ajax.markup.html.AjaxIndicatorAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -36,12 +38,17 @@ import wicketdnd.Transfer;
 /**
  * @author Sven Meier
  */
-public class ListsExample extends Example
+public class ListsExample extends Example implements IAjaxIndicatorAware
 {
+	
+	private AjaxIndicatorAppender indicator;
+
 	public ListsExample(String id)
 	{
 		super(id);
 
+		this.add(indicator = new AjaxIndicatorAppender());
+		
 		content.add(newList("vertical"));
 		content.add(newList("horizontal"));
 
@@ -53,6 +60,7 @@ public class ListsExample extends Example
 		final FooList foos = new FooList();
 
 		final WebMarkupContainer list = new WebMarkupContainer(id);
+		
 		final ListView<Foo> items = new ListView<Foo>("items", foos)
 		{
 			@Override
@@ -155,5 +163,12 @@ public class ListsExample extends Example
 		list.add(dropTarget);
 
 		return list;
+	}
+
+	@Override
+	public String getAjaxIndicatorMarkupId()
+	{
+		// TODO Auto-generated method stub
+		return indicator.getMarkupId();
 	}
 }

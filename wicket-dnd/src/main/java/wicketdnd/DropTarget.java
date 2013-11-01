@@ -213,10 +213,10 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 
 		final String id = getComponent().getMarkupId();
 		String initJS = String.format(
-				"new wicketdnd.dropTarget('%s','%s',%s,%s,{'center':'%s','top':'%s','right':'%s','bottom':'%s','left':'%s'});", id,
+				"new wicketdnd.dropTarget('%s','%s',%s,%s,{'center':'%s','top':'%s','right':'%s','bottom':'%s','left':'%s'}, '%s');", id,
 				getCallbackUrl(), new CollectionFormattable(getOperations()),
 				new CollectionFormattable(getTypes()), centerSelector, topSelector, rightSelector,
-				bottomSelector, leftSelector);
+				bottomSelector, leftSelector, this.findIndicatorId());
 		response.render(OnDomReadyHeaderItem.forScript(initJS));
 	}
 
