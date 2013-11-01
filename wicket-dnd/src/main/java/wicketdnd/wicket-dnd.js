@@ -231,7 +231,7 @@
 				};
 			},
 		
-			dropTarget: function(id, callbackUrl, operations, types, selectors) {
+			dropTarget: function(id, callbackUrl, operations, types, selectors, indicatorId) {
 				var element = Wicket.$(id);
 
 				$(element).data('drop-target', {
@@ -271,6 +271,10 @@
 							'ep': {},
 							'sh': [success]
 						};
+						if (indicatorId)
+							{
+							attrs['i']=indicatorId;
+							}
 						attrs.ep['phase'] = phase;
 						attrs.ep['operation'] = operation.name;
 						attrs.ep['source'] = componentPath;
