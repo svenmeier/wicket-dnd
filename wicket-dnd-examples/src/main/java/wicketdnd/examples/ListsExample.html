@@ -18,6 +18,8 @@
 <body>
 
 <wicket:extend>
+	<p>(showing veil during requests by implementing IAjaxIndicatorAware)</p>
+	
 	<div wicket:id="vertical" class="vertical">
 		<div wicket:id="items" class="item">
 			<span class="initiate">&nbsp;</span> <input type="text" wicket:id="name" size="4" />
@@ -30,6 +32,8 @@
 		</div>
 		<div class="clearer"/>
 	</div>
+	
+	<div id="veil" style="display:none;"></div>
 </wicket:extend>
 
 </body>

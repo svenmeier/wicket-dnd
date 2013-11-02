@@ -19,6 +19,7 @@ import java.util.Set;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.IAjaxIndicatorAware;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.TextField;
@@ -36,7 +37,7 @@ import wicketdnd.Transfer;
 /**
  * @author Sven Meier
  */
-public class ListsExample extends Example
+public class ListsExample extends Example implements IAjaxIndicatorAware
 {
 	public ListsExample(String id)
 	{
@@ -155,5 +156,11 @@ public class ListsExample extends Example
 		list.add(dropTarget);
 
 		return list;
+	}
+
+	@Override
+	public String getAjaxIndicatorMarkupId()
+	{
+		return "veil";
 	}
 }

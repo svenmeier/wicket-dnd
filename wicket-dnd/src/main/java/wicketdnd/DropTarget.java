@@ -213,8 +213,8 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 
 		final String id = getComponent().getMarkupId();
 		String initJS = String.format(
-				"new wicketdnd.dropTarget('%s','%s',%s,%s,{'center':'%s','top':'%s','right':'%s','bottom':'%s','left':'%s'});", id,
-				getCallbackUrl(), new CollectionFormattable(getOperations()),
+				"new wicketdnd.dropTarget('%s',%s,%s,%s,{'center':'%s','top':'%s','right':'%s','bottom':'%s','left':'%s'});", id,
+				renderAjaxAttributes(getComponent()), new CollectionFormattable(getOperations()),
 				new CollectionFormattable(getTypes()), centerSelector, topSelector, rightSelector,
 				bottomSelector, leftSelector);
 		response.render(OnDomReadyHeaderItem.forScript(initJS));
@@ -273,7 +273,7 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 		}
 		else
 		{
-			throw new WicketRuntimeException("unkown type '" + phase + "'");
+			throw new WicketRuntimeException("unkown phase '" + phase + "'");
 		}
 	}
 

@@ -231,11 +231,10 @@
 				};
 			},
 		
-			dropTarget: function(id, callbackUrl, operations, types, selectors) {
+			dropTarget: function(id, attrs, operations, types, selectors) {
 				var element = Wicket.$(id);
 
 				$(element).data('drop-target', {
-					'callbackUrl' : callbackUrl,
 					'operations' : operations,
 					'types' : types,
 					'selectors' : selectors,
@@ -266,17 +265,14 @@
 						return location;
 					},
 					'notify' : function(phase, operation, componentPath, id, location, success) {
-						var attrs = {
-							'u': callbackUrl,
-							'ep': {},
-							'sh': [success]
-						};
+						attrs.ep = attrs.ep || {};
 						attrs.ep['phase'] = phase;
 						attrs.ep['operation'] = operation.name;
 						attrs.ep['source'] = componentPath;
 						attrs.ep['drag'] = id;
 						attrs.ep['component'] = location.id;
 						attrs.ep['anchor'] = location.anchor;
+						attrs['sh'] = [success];
 						Wicket.Ajax.ajax(attrs);
 					}
 				});
