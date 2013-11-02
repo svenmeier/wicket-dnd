@@ -123,7 +123,8 @@ public class DnDTester
 
 		request.setParameter("operation", operation.name());
 
-		request.setParameter("source", dragSource.getPath());
+		request.setParameter("path", dragSource.getPath());
+		request.setParameter("behavior", "" + dragSource.getBehaviorId());
 		request.setParameter("drag", drag.getMarkupId());
 
 		tester.executeBehavior(dropTarget);
