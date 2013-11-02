@@ -17,7 +17,7 @@
 
 			COPY : 17,
 		
-			dragSource: function(id, componentPath, operations, types, selectors) {
+			dragSource: function(id, behavior, componentPath, operations, types, selectors) {
 				var element = Wicket.$(id);
 
 				$(element).on('mousedown', selectors.initiate, function(event) {
@@ -115,7 +115,7 @@
 						operation.unmark();
 
 						if (operation.name != 'NONE') {
-							target.notify('drop', operation, componentPath, id, location, undefined);
+							target.notify('drop', operation, id, behavior, componentPath, location, undefined);
 							target = undefined;
 						}
 
@@ -170,8 +170,9 @@
 									target.notify(
 										'drag',
 										operation,
-										componentPath,
 										id,
+										behavior,
+										componentPath,
 										location,
 										function() {
 											mark(id);
@@ -264,12 +265,13 @@
 
 						return location;
 					},
-					'notify' : function(phase, operation, componentPath, id, location, success) {
+					'notify' : function(phase, operation, id, behavior, path, location, success) {
 						attrs.ep = attrs.ep || {};
 						attrs.ep['phase'] = phase;
 						attrs.ep['operation'] = operation.name;
-						attrs.ep['source'] = componentPath;
 						attrs.ep['drag'] = id;
+						attrs.ep['behavior'] = behavior;
+						attrs.ep['path'] = path;
 						attrs.ep['component'] = location.id;
 						attrs.ep['anchor'] = location.anchor;
 						attrs['sh'] = [success];

@@ -174,10 +174,11 @@ public class DragSource extends Behavior
 
 		final String id = component.getMarkupId();
 		final String path = component.getPageRelativePath();
-
+		int behavior = component.getBehaviorId(this);
+		
 		String initJS = String
-				.format("wicketdnd.dragSource('%s','%s',%s,%s,{'select':'%s','initiate':'%s','clone':'%s'});",
-						id, path, new CollectionFormattable(getOperations()),
+				.format("wicketdnd.dragSource('%s','%s','%s', %s,%s,{'select':'%s','initiate':'%s','clone':'%s'});",
+						id, behavior, path, new CollectionFormattable(getOperations()),
 						new CollectionFormattable(getTypes()), selector, initiateSelector,
 						cloneSelector);
 		response.render(OnDomReadyHeaderItem.forScript(initJS));
@@ -258,9 +259,9 @@ public class DragSource extends Behavior
 
 	private Component getDrag(Request request)
 	{
-		String id = request.getRequestParameters().getParameterValue("drag").toString();
+		String drag = request.getRequestParameters().getParameterValue("drag").toString();
 
-		return MarkupIdVisitor.getComponent((MarkupContainer)component, id);
+		return MarkupIdVisitor.getComponent((MarkupContainer)component, drag);
 	}
 
 	/**
@@ -272,21 +273,14 @@ public class DragSource extends Behavior
 	 */
 	final static DragSource read(Page page, Request request)
 	{
-		String path = request.getRequestParameters().getParameterValue("source").toString();
-
+		String path = request.getRequestParameters().getParameterValue("path").toString();
 		Component component = page.get(path);
-
-		if (component != null)
+		if (component == null)
 		{
-			for (Behavior behavior : component.getBehaviors())
-			{
-				if (behavior instanceof DragSource)
-				{
-					return (DragSource)behavior;
-				}
-			}
+			throw new PageExpiredException("No drag source found " + path);
 		}
 
-		throw new PageExpiredException("No drag source found " + path);
+		int behavior =  request.getRequestParameters().getParameterValue("behavior").toInt();
+		return (DragSource)component.getBehaviorById(behavior);
 	}
 }
