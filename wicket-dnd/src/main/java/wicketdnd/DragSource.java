@@ -160,6 +160,16 @@ public class DragSource extends Behavior
 		return component.getPageRelativePath();
 	}
 
+	/**
+	 * Get the id of this behavior.
+	 * 
+	 * @return id
+	 */
+	public int getBehaviorId()
+	{
+		return component.getBehaviorId(this);
+	}
+
 	@Override
 	public final void renderHead(Component c, IHeaderResponse response)
 	{
