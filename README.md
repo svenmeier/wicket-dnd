@@ -14,7 +14,7 @@ A generic Drag&Drop framework for [Wicket](http://wicket.apache.org):
 - themeable
 - works in Firefox, Safari, Chrome, Opera
 
-See our live examples on [http://wicket-dnd.appspot.com](http://wicket-dnd.appspot.com) (beware - very slow!).
+See our live examples on [http://wicket-dnd-jquery.appspot.com](http://wicket-dnd-jquery.appspot.com) (beware - very slow!).
 
 Themes
 ------
