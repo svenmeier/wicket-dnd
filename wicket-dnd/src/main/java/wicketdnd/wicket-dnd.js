@@ -27,8 +27,12 @@
 
 					var closest = $(this).closest(selectors.select).get(0);
 					if (closest.id) {
+						// preventing start of text selection
 						event.preventDefault();
 						event.stopPropagation();
+
+						// ... will also prevent focus handling, so remove focus explicitly
+						$(':focus').blur();
 
 						gesture(closest.id, wicketdnd.position(event));
 					} else {
