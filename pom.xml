@@ -221,7 +221,7 @@
 		<connection>scm:git:http://github.com/svenmeier/wicket-dnd.git</connection>
 		<developerConnection>scm:git:git@github.com:svenmeier/wicket-dnd.git</developerConnection>
 		<url>http://github.com/svenmeier/wicket-dnd</url>
-		<tag>master</tag>
+		<tag>wicket-6.x</tag>
 	</scm>
 
 	<developers>
