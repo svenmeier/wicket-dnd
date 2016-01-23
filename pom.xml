@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.svenmeier.wicket-dnd</groupId>
 	<artifactId>wicket-dnd-parent</artifactId>
-	<version>0.7.0</version>
+	<version>0.7.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Wicket Drag and Drop Parent</name>
 	<description>Wicket Drag and Drop.</description>
@@ -18,8 +18,8 @@
 	</licenses>
 
 	<properties>
-		<wicket.version>7.0.0-SNAPSHOT</wicket.version>
-		<wicketstuff.version>7.0-SNAPSHOT</wicketstuff.version>
+		<wicket.version>7.0.0</wicket.version>
+		<wicketstuff.version>7.0.0</wicketstuff.version>
 		<jetty.version>8.1.16.v20140903</jetty.version>
 		<slf4j.version>1.7.12</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
