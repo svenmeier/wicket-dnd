@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.svenmeier.wicket-dnd</groupId>
         <artifactId>wicket-dnd-parent</artifactId>
-        <version>0.7.1</version>
+        <version>0.7.1-SNAPSHOT</version>
     </parent>
 
 	<artifactId>wicket-dnd</artifactId>
