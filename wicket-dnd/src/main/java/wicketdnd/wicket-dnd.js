@@ -97,11 +97,20 @@
 							return;
 						}
 
-						target = wicketdnd.findTarget(event);
+						var candidate = event.target;
+						while (candidate) {
+							target = wicketdnd.findTarget(candidate);
+							if (target) {
+								type = wicketdnd.findType(types, target.types);
+								if (type != undefined) {
+									break;
+								}
+							}
+							
+							candidate = candidate.parentNode;
+						}
 
 						updateLocation(target, event);
-
-						type = wicketdnd.findType(types, location.types);
 
 						updateOperation();
 					});
@@ -139,7 +148,7 @@
 					};
 
 					function updateOperation() {
-						var newOperation = wicketdnd.findOperation(link, copy, type, operations, location.operations);
+						var newOperation = wicketdnd.findOperation(link, copy, operations, location.operations);
 						if (newOperation.name != operation.name) {
 							operation.unmark();
 							operation = newOperation;
@@ -289,7 +298,6 @@
 						location = {
 							'id' : candidate.id,
 							'operations' : operations,
-							'types' : types,
 							'anchor' : 'CENTER',
 							'mark' : function() {
 								$('#' + candidate.id).addClass('dnd-drop-center');
@@ -323,7 +331,6 @@
 						location = {
 							'id' : candidate.id,
 							'operations' : operations,
-							'types' : types,
 							'anchor' : 'TOP',
 							'mark' : function() {
 								$(element).append(_div);
@@ -338,7 +345,6 @@
 						location = {
 							'id' : candidate.id,
 							'operations' : operations,
-							'types' : types,
 							'anchor' : 'BOTTOM',
 							'mark' : function() {
 								$(element).append(_div);
@@ -353,7 +359,6 @@
 						location = {
 							'id' : candidate.id,
 							'operations' : operations,
-							'types' : types,
 							'anchor' : 'LEFT',
 							'mark' : function() {
 								$(element).append(_div);
@@ -368,7 +373,6 @@
 						location = {
 							'id' : candidate.id,
 							'operations' : operations,
-							'types' : types,
 							'anchor' : 'RIGHT',
 							'mark' : function() {
 								$(element).append(_div);
@@ -384,15 +388,14 @@
 				};
 			},
 
-			findTarget: function(event) {
-				var candidate = event.target;
-				while (candidate) {
-					var data = $(candidate).data('drop-target');
+			findTarget: function(element) {
+				while (element) {
+					var data = $(element).data('drop-target');
 					if (data) {
 						return data;
 					}
 
-					candidate = candidate.parentNode;
+					element = element.parentNode;
 				}
 
 				return undefined;
@@ -411,7 +414,6 @@
 
 			locationNone: {
 				'operations' : [],
-				'types' : [],
 				'mark' : function() {
 				},
 				'unmark' : function() {
@@ -441,32 +443,31 @@
 				return undefined;
 			},
 
-			findOperation: function(link, copy, type, sourceOperations, targetOperations) {
+			findOperation: function(link, copy, sourceOperations, targetOperations) {
 
 				function allowed(operation) {
 					return $.inArray(operation, sourceOperations) != -1 && 
 					       $.inArray(operation, targetOperations) != -1;
 				};
 
-				if (type != undefined) {
-					if (link) {
-						if (allowed('LINK')) {
-							return wicketdnd.operation('LINK');
-						}
-					} else if (copy) {
-						if (allowed('COPY')) {
-							return wicketdnd.operation('COPY');
-						}
-					} else {
-						if (allowed('MOVE')) {
-							return wicketdnd.operation('MOVE');
-						} else if (allowed('COPY')) {
-							return wicketdnd.operation('COPY');
-						} else if (allowed('LINK')) {
-							return wicketdnd.operation('LINK');
-						}
+				if (link) {
+					if (allowed('LINK')) {
+						return wicketdnd.operation('LINK');
+					}
+				} else if (copy) {
+					if (allowed('COPY')) {
+						return wicketdnd.operation('COPY');
+					}
+				} else {
+					if (allowed('MOVE')) {
+						return wicketdnd.operation('MOVE');
+					} else if (allowed('COPY')) {
+						return wicketdnd.operation('COPY');
+					} else if (allowed('LINK')) {
+						return wicketdnd.operation('LINK');
 					}
 				}
+				
 				return wicketdnd.operation('NONE');
 			}
 		};
