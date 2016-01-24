@@ -65,7 +65,7 @@ and [OSS Sonatype](https://oss.sonatype.org/content/repositories/releases/com/gi
     <dependency>
       <groupId>com.github.svenmeier.wicket-dnd</groupId>
       <artifactId>wicket-dnd</artifactId>
-      <version>0.7.1</version>
+      <version>0.7.2</version>
     </dependency>
 
 
