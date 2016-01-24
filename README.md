@@ -59,7 +59,7 @@ and [OSS Sonatype](https://oss.sonatype.org/content/repositories/releases/com/gi
     <dependency>
       <groupId>com.github.svenmeier.wicket-dnd</groupId>
       <artifactId>wicket-dnd</artifactId>
-      <version>0.6.0</version>
+      <version>0.6.1</version>
     </dependency>
 
 For snapshot releases you have to use the [OSS Sonatype Snapshot repository](https://oss.sonatype.org/content/repositories/snapshots/com/github/svenmeier/wicket-dnd/):
@@ -67,7 +67,7 @@ For snapshot releases you have to use the [OSS Sonatype Snapshot repository](htt
     <dependency>
       <groupId>com.github.svenmeier.wicket-dnd</groupId>
       <artifactId>wicket-dnd</artifactId>
-      <version>0.6.1-SNAPSHOT</version>
+      <version>0.6.2-SNAPSHOT</version>
     </dependency>
 
     <repository>
