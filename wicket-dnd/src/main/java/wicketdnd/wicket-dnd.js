@@ -16,7 +16,9 @@
 			LINK : 16,
 
 			COPY : 17,
-		
+			
+			DROP_TARGET_PREFIX : 'dropTarget_',
+			
 			dragSource: function(id, behavior, componentPath, operations, types, selectors) {
 				var element = Wicket.$(id);
 
@@ -77,7 +79,6 @@
 
 					var target = undefined;
 					var location = wicketdnd.locationNone;
-					var type = undefined;
 					var operation = wicketdnd.operation('NONE');
 					operation.mark();
 
@@ -97,18 +98,7 @@
 							return;
 						}
 
-						var candidate = event.target;
-						while (candidate) {
-							target = wicketdnd.findTarget(candidate);
-							if (target) {
-								type = wicketdnd.findType(types, target.types);
-								if (type != undefined) {
-									break;
-								}
-							}
-							
-							candidate = candidate.parentNode;
-						}
+						target = wicketdnd.findTarget(types, event);
 
 						updateLocation(target, event);
 
@@ -248,7 +238,7 @@
 			dropTarget: function(id, attrs, operations, types, selectors) {
 				var element = Wicket.$(id);
 
-				$(element).data('drop-target', {
+				$(element).data(wicketdnd.DROP_TARGET_PREFIX + id, {
 					'operations' : operations,
 					'types' : types,
 					'selectors' : selectors,
@@ -388,13 +378,30 @@
 				};
 			},
 
-			findTarget: function(element) {
-				while (element) {
-					var data = $(element).data('drop-target');
-					if (data) {
-						return data;
-					}
+			findTarget: function(types, event) {
 
+				var element = event.target;
+				while (element) {
+					var target = undefined;
+					
+					$.each($(element).data(), function(key, value) {
+						if (key.indexOf(wicketdnd.DROP_TARGET_PREFIX) == 0) {
+							var intersection = types.filter(function(type) {
+							    return value.types.indexOf(type) != -1;
+							});
+							
+							if (intersection.length > 0) {
+								target = value;
+								// stop loop
+								return false;
+							}
+						}
+					});
+
+					if (target) {
+						return target;
+					}
+					
 					element = element.parentNode;
 				}
 
@@ -430,17 +437,6 @@
 						$('body').removeClass('dnd-' + name);
 					}
 				};
-			},
-
-			findType: function(sourceTypes, targetTypes) {
-				for (var index = 0; index < sourceTypes.length; index++) {
-					var type = sourceTypes[index];
-			
-					if ($.inArray(type, targetTypes) != -1) {
-						return type;
-					}
-				}
-				return undefined;
 			},
 
 			findOperation: function(link, copy, sourceOperations, targetOperations) {
