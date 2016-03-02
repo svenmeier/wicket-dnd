@@ -37,11 +37,11 @@ import wicketdnd.util.MarkupIdVisitor;
 /**
  * A target of drops. Can be configured for specific {@link Location}s via CSS
  * selectors.
- * 
+ *
  * @see #getTypes()
  * @see #onDrag(AjaxRequestTarget, Location)
  * @see #onDrop(AjaxRequestTarget, Transfer, Location)
- * 
+ *
  * @author Sven Meier
  */
 public class DropTarget extends AbstractDefaultAjaxBehavior
@@ -58,14 +58,16 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 
 	private String rightSelector = Transfer.UNDEFINED;
 
-	private Set<Operation> operations;
+    private boolean forceSibling;
+
+    private Set<Operation> operations;
 
 	/**
 	 * Create a target for drop.
-	 * 
+	 *
 	 * @param operations
 	 *            allowed operations
-	 * 
+	 *
 	 * @see #getOperations()
 	 */
 	public DropTarget(Operation... operations)
@@ -75,10 +77,10 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Create a target for drop.
-	 * 
+	 *
 	 * @param operations
 	 *            allowed operations
-	 * 
+	 *
 	 * @see #getOperations()
 	 */
 	public DropTarget(Set<Operation> operations)
@@ -88,7 +90,7 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Get possible types for a transfer.
-	 * 
+	 *
 	 * @return transfers
 	 * @see Transfer#getType()
 	 */
@@ -100,9 +102,9 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 	/**
 	 * Allow drop on the {@link Anchor#CENTER} of elements matching the given
 	 * selector.
-	 * 
+	 *
 	 * Make sure all matching elements are configured to output their markup id.
-	 * 
+	 *
 	 * @param selector
 	 *            element selector
 	 * @see Component#setOutputMarkupId(boolean)
@@ -116,9 +118,9 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 	/**
 	 * Allow drop on the {@link Anchor#TOP} of elements matching the given
 	 * selector.
-	 * 
+	 *
 	 * Make sure all matching elements are configured to output their markup id.
-	 * 
+	 *
 	 * @param selector
 	 *            element selector
 	 * @see Component#setOutputMarkupId(boolean)
@@ -132,9 +134,9 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 	/**
 	 * Allow drop on the {@link Anchor#RIGHT} of elements matching the given
 	 * selector.
-	 * 
+	 *
 	 * Make sure all matching elements are configured to output their markup id.
-	 * 
+	 *
 	 * @param selector
 	 *            element selector
 	 * @see Component#setOutputMarkupId(boolean)
@@ -148,9 +150,9 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 	/**
 	 * Allow drop on the {@link Anchor#BOTTOM} of elements matching the given
 	 * selector.
-	 * 
+	 *
 	 * Make sure all matching elements are configured to output their markup id.
-	 * 
+	 *
 	 * @param selector
 	 *            element selector
 	 * @see Component#setOutputMarkupId(boolean)
@@ -164,9 +166,9 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 	/**
 	 * Allow drop on the {@link Anchor#LEFT} of elements matching the given
 	 * selector.
-	 * 
+	 *
 	 * Make sure all matching elements are configured to output their markup id.
-	 * 
+	 *
 	 * @param selector
 	 *            element selector
 	 * @see Component#setOutputMarkupId(boolean)
@@ -199,10 +201,17 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 		return this;
 	}
 
-	@Override
-	public final void renderHead(Component component, IHeaderResponse response)
-	{
-		super.renderHead(component, response);
+    /**
+     * Force DropTarget to be a sibling of DragSource.
+     */
+    public DropTarget forceSibling() {
+        this.forceSibling = true;
+        return this;
+    }
+
+    @Override
+    public final void renderHead(Component component, IHeaderResponse response) {
+        super.renderHead(component, response);
 
 		renderDropHead(response);
 	}
@@ -211,26 +220,26 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 	{
 		response.render(JavaScriptHeaderItem.forReference(Transfer.JS));
 
-		final String id = getComponent().getMarkupId();
-		String initJS = String.format(
-				"new wicketdnd.dropTarget('%s',%s,%s,%s,{'center':'%s','top':'%s','right':'%s','bottom':'%s','left':'%s'});", id,
-				renderAjaxAttributes(getComponent()), new CollectionFormattable(getOperations()),
-				new CollectionFormattable(getTypes()), centerSelector, topSelector, rightSelector,
-				bottomSelector, leftSelector);
-		response.render(OnDomReadyHeaderItem.forScript(initJS));
-	}
+        final String id = getComponent().getMarkupId();
+        String initJS = String.format(
+                "new wicketdnd.dropTarget('%s',%s,%s,%s,%s,{'center':'%s','top':'%s','right':'%s','bottom':'%s','left':'%s'});",
+                id, renderAjaxAttributes(getComponent()), new CollectionFormattable(getOperations()),
+                new CollectionFormattable(getTypes()), forceSibling, centerSelector, topSelector, rightSelector, bottomSelector,
+                leftSelector);
+        response.render(OnDomReadyHeaderItem.forScript(initJS));
+    }
 
 	@Override
 	protected void onComponentTag(ComponentTag tag)
 	{
 		super.onComponentTag(tag);
-		
+
 		tag.append("class", "dnd-drop-target", " ");
 	}
-	
+
 	/**
 	 * Get supported operations.
-	 * 
+	 *
 	 * @return operations
 	 * @see Transfer#getOperation()
 	 */
@@ -318,15 +327,14 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 
 		Component component = MarkupIdVisitor.getComponent((MarkupContainer)getComponent(), id);
 
-		Anchor anchor = Anchor.valueOf(request.getRequestParameters().getParameterValue("anchor")
-				.toString());
+		Anchor anchor = Anchor.valueOf(request.getRequestParameters().getParameterValue("anchor").toString());
 
 		return new Location(component, anchor);
 	}
 
 	/**
 	 * Notification that a drag happend over this drop target.
-	 * 
+	 *
 	 * @param target
 	 *            initiating request target
 	 * @param location
@@ -338,9 +346,9 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Notification that a drop happend on this drop target.
-	 * 
+	 *
 	 * The default implementation always rejects the drop.
-	 * 
+	 *
 	 * @param target
 	 *            initiating request target
 	 * @param transfer
@@ -359,7 +367,7 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 	/**
 	 * Hook method to handle rejected drops. Default implementation does
 	 * nothing.
-	 * 
+	 *
 	 * @param target
 	 *            initiating request target
 	 */
