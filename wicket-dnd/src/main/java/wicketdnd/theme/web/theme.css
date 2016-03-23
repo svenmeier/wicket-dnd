@@ -12,7 +12,7 @@ body.dnd-LINK * {
 }
 
 div.dnd-hover {
-	position: absolute;
+	position: fixed;
 	padding-left: 18px;
 	filter: alpha(opacity=70);
 	opacity: 0.7;
