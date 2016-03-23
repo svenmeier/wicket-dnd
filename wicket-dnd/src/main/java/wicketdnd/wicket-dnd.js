@@ -73,7 +73,12 @@
 					var copy = false;
 
 					var hover = createHover(id);
-					$('body').append(hover);
+					var fixedPosition = hover.css("position") === "fixed";
+					if (fixedPosition) {
+						$(element).append(hover);
+					} else {
+						$('body').append(hover);
+					}
 
 					mark(id);
 
@@ -88,7 +93,11 @@
 						event.preventDefault();
 						event.stopPropagation();
 
-						hover.css({'left' : (event.pageX + wicketdnd.OFFSET) + 'px', 'top' : (event.pageY + wicketdnd.OFFSET) + 'px'});
+						if (fixedPosition) {
+							hover.css({'left' : (event.clientX + wicketdnd.OFFSET) + 'px', 'top' : (event.clientY + wicketdnd.OFFSET) + 'px'});
+						} else {
+							hover.css({'left' : (event.pageX + wicketdnd.OFFSET) + 'px', 'top' : (event.pageY + wicketdnd.OFFSET) + 'px'});
+						}
 						
 						if ($(event.target).hasClass('dnd-hover-cover') ||
 						    $(event.target).hasClass('dnd-drop-top') ||

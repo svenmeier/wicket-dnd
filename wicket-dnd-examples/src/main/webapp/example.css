@@ -74,6 +74,9 @@ div.scroller {
 	overflow: scroll;
 	/* must be relative too or nested table's overflow will not be hidden on IE8 */
 	position: relative;
+	
+	/* show style inheritance for dragged elements */
+	color: red;
 }
 
 div.scroller table {
