@@ -23,29 +23,35 @@ import org.apache.wicket.util.visit.IVisitor;
 
 /**
  * Find a child component by it's markup id.
- * 
+ *
  * @author Sven Meier
  */
-public class MarkupIdVisitor implements IVisitor<Component,Component> {
+public class MarkupIdVisitor implements IVisitor<Component, Component>
+{
 
 	private final String id;
 
-	public MarkupIdVisitor(String id) {
-		if (id == null) {
+	public MarkupIdVisitor(String id)
+	{
+		if (id == null)
+		{
 			throw new IllegalArgumentException("id must not be null");
 		}
 		this.id = id;
 	}
 
-	public void component(Component component, final IVisit<Component> visit) {
-		if (id.equals(component.getMarkupId(false))) {
+	@Override
+	public void component(Component component, final IVisit<Component> visit)
+	{
+		if (this.id.equals(component.getMarkupId(false)))
+		{
 			visit.stop(component);
 		}
 	}
 
 	/**
 	 * Get the given container's descendent by markup id.
-	 * 
+	 *
 	 * @param container
 	 *            container to find descendent of
 	 * @param id
@@ -54,18 +60,37 @@ public class MarkupIdVisitor implements IVisitor<Component,Component> {
 	 * @throws PageExpiredException
 	 *             if no descendent has the given markup id
 	 */
-	public static Component getComponent(MarkupContainer container, String id) {
-		if (id.equals(container.getMarkupId(false))) {
+	public static Component getComponent(MarkupContainer container, String id)
+	{
+		if (id.equals(container.getMarkupId(false)))
+		{
 			return container;
 		}
-		
-		Component component = container
-				.visitChildren(new MarkupIdVisitor(id));
 
-		if (component == null) {
+		Component component = container.visitChildren(new MarkupIdVisitor(id));
+
+		if (component == null)
+		{
 			throw new PageExpiredException("No component with markup id " + id);
 		}
 
 		return component;
+	}
+
+	public static boolean getComponentExists(MarkupContainer container, String id)
+	{
+		if (id.equals(container.getMarkupId(false)))
+		{
+			return true;
+		}
+
+		Component component = container.visitChildren(new MarkupIdVisitor(id));
+
+		if (component == null)
+		{
+			return false;
+		}
+
+		return true;
 	}
 }

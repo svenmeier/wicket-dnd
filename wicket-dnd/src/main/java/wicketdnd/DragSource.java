@@ -34,11 +34,11 @@ import wicketdnd.util.MarkupIdVisitor;
 
 /**
  * A source of drags.
- * 
+ *
  * @see #getTypes()
  * @see #onBeforeDrop(Component, Transfer)
  * @see #onAfterDrop(AjaxRequestTarget, Transfer)
- * 
+ *
  * @author Sven Meier
  */
 public class DragSource extends Behavior
@@ -58,10 +58,10 @@ public class DragSource extends Behavior
 
 	/**
 	 * Create a source of drags.
-	 * 
+	 *
 	 * @param operations
 	 *            allowed operations
-	 * 
+	 *            
 	 * @see #getOperations()
 	 */
 	public DragSource(Operation... operations)
@@ -71,10 +71,10 @@ public class DragSource extends Behavior
 
 	/**
 	 * Create a source of drags.
-	 * 
+	 *
 	 * @param operations
 	 *            allowed operations
-	 * 
+	 *            
 	 * @see #getOperations()
 	 */
 	public DragSource(Set<Operation> operations)
@@ -84,7 +84,7 @@ public class DragSource extends Behavior
 
 	/**
 	 * Get supported types for a transfer.
-	 * 
+	 *
 	 * @return transfers
 	 * @see Transfer#getType()
 	 */
@@ -97,7 +97,7 @@ public class DragSource extends Behavior
 	 * Allow drag on elements matching the given selector.
 	 * 
 	 * Make sure all matching elements are configured to output their markup id.
-	 * 
+	 *
 	 * @param selector
 	 *            element selector
 	 * @see Component#setOutputMarkupId(boolean)
@@ -121,7 +121,7 @@ public class DragSource extends Behavior
 
 	/**
 	 * Initiate drag on elements matching the given selector.
-	 * 
+	 *
 	 * @param selector
 	 *            element selector
 	 */
@@ -133,7 +133,7 @@ public class DragSource extends Behavior
 
 	/**
 	 * Clone drag on elements matching the given selector.
-	 * 
+	 *
 	 * @param selector
 	 *            element selector
 	 */
@@ -152,7 +152,7 @@ public class DragSource extends Behavior
 
 	/**
 	 * Get the identifying path of this drag source.
-	 * 
+	 *
 	 * @return path in page
 	 */
 	public String getPath()
@@ -162,7 +162,7 @@ public class DragSource extends Behavior
 
 	/**
 	 * Get the id of this behavior.
-	 * 
+	 *
 	 * @return id
 	 */
 	public int getBehaviorId()
@@ -185,12 +185,11 @@ public class DragSource extends Behavior
 		final String id = component.getMarkupId();
 		final String path = component.getPageRelativePath();
 		int behavior = component.getBehaviorId(this);
-		
-		String initJS = String
-				.format("wicketdnd.dragSource('%s','%s','%s', %s,%s,{'select':'%s','initiate':'%s','clone':'%s'});",
-						id, behavior, path, new CollectionFormattable(getOperations()),
-						new CollectionFormattable(getTypes()), selector, initiateSelector,
-						cloneSelector);
+
+		String initJS = String.format(
+				"wicketdnd.dragSource('%s','%s','%s', %s,%s,{'select':'%s','initiate':'%s','clone':'%s'});", id,
+				behavior, path, new CollectionFormattable(getOperations()),
+				new CollectionFormattable(getTypes()), selector, initiateSelector, cloneSelector);
 		response.render(OnDomReadyHeaderItem.forScript(initJS));
 	}
 
@@ -204,7 +203,7 @@ public class DragSource extends Behavior
 
 	/**
 	 * Get supported operations.
-	 * 
+	 *
 	 * @return operations
 	 * @see Transfer#getOperation()
 	 */
@@ -232,11 +231,9 @@ public class DragSource extends Behavior
 
 	/**
 	 * Notification that a drop is about to happen - any implementation should
-	 * set the data on the given transfer or reject it.
-	 * 
-	 * The default implementation uses the component's model object as transfer
-	 * data.
-	 * 
+	 * set the data on the given transfer or reject it. The default
+	 * implementation uses the component's model object as transfer data.
+	 *
 	 * @param drag
 	 *            component to get data from
 	 * @param operation
@@ -255,9 +252,8 @@ public class DragSource extends Behavior
 
 	/**
 	 * Notification that a drop happened of one of this source's transfer datas.
-	 * 
 	 * The default implementation does nothing.
-	 * 
+	 *
 	 * @param target
 	 *            initiating request target
 	 * @param transfer
@@ -271,12 +267,12 @@ public class DragSource extends Behavior
 	{
 		String drag = request.getRequestParameters().getParameterValue("drag").toString();
 
-		return MarkupIdVisitor.getComponent((MarkupContainer)component, drag);
+		return MarkupIdVisitor.getComponent((MarkupContainer) component, drag);
 	}
 
 	/**
 	 * Get the drag source of the given request.
-	 * 
+	 *
 	 * @param request
 	 *            request on which a drag happened
 	 * @return drag source
@@ -290,7 +286,25 @@ public class DragSource extends Behavior
 			throw new PageExpiredException("No drag source found " + path);
 		}
 
-		int behavior =  request.getRequestParameters().getParameterValue("behavior").toInt();
-		return (DragSource)component.getBehaviorById(behavior);
+		int behavior = request.getRequestParameters().getParameterValue("behavior").toInt();
+		return (DragSource) component.getBehaviorById(behavior);
+	}
+
+	final static boolean getDragSourceExists(Page page, Request request)
+	{
+		String path = request.getRequestParameters().getParameterValue("path").toString();
+		Component component = page.get(path);
+		if (component == null)
+		{
+			return false;
+		}
+		return true;
+	}
+
+	public boolean getDragComponentExists(Request request)
+	{
+		String drag = request.getRequestParameters().getParameterValue("drag").toString();
+
+		return MarkupIdVisitor.getComponentExists((MarkupContainer) this.component, drag);
 	}
 }
