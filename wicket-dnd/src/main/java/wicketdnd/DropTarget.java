@@ -29,6 +29,7 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.protocol.http.PageExpiredException;
 import org.apache.wicket.request.Request;
 
 import wicketdnd.util.CollectionFormattable;
@@ -266,6 +267,10 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 
 				source.afterDrop(target, transfer);
 			}
+			catch (PageExpiredException ex)
+			{
+				onExpired(target, ex);
+			}
 			catch (Reject reject)
 			{
 				onRejected(target);
@@ -354,6 +359,19 @@ public class DropTarget extends AbstractDefaultAjaxBehavior
 			throws Reject
 	{
 		transfer.reject();
+	}
+
+	/**
+	 * Hook method to handle expiring of the drag sources, i.e. it is not longer in the page.
+	 * <br>
+	 * Default implementation throws the given exception.
+	 * 
+	 * @param target
+	 * @param ex
+	 */
+	public void onExpired(AjaxRequestTarget target, PageExpiredException ex)
+	{
+		throw ex;
 	}
 
 	/**
