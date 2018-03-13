@@ -27,36 +27,13 @@
 
 					var closest = $(this).closest(selectors.select).get(0);
 					if (closest.id) {
-						// preventing start of text selection
-						event.preventDefault();
-						event.stopPropagation();
-
-						// ... will also prevent focus handling, so remove focus explicitly
-						$(':focus').blur();
-
-						gesture(closest.id, wicketdnd.position(event));
+						wicketdnd.gesture(event, function() {
+							transfer(closest.id); 							
+						});
 					} else {
 						Wicket.Log.error('wicket-dnd: drag matched selector but does not have markup id');
 					}
 				});
-
-				function gesture(id, startPosition) {
-					$(document).on('mousemove.wicketdnd', function(event) {
-						event.preventDefault();
-						event.stopPropagation();
-
-						var distance = wicketdnd.distance(wicketdnd.position(event), startPosition);
-						if (distance >= wicketdnd.THRESHOLD) {
-							$(document).off('.wicketdnd');
-	
-							transfer(id);
-						}
-					});
-
-					$(document).on('mouseup.wicketdnd', function(event) {
-						$(document).off('.wicketdnd');
-					});
-				};
 
 				function mark(id) {
 					$('#' + id).addClass("dnd-drag");
@@ -472,7 +449,39 @@
 				}
 				
 				return wicketdnd.operation('NONE');
-			}
+			},
+			
+			/**
+			 * Gesture detection.
+			 * 
+			 * @param mousedown initiating a gesture
+			 * @param onDetected callback to notify of detected gesture 
+			 */
+			gesture : function(event, onDetected) {
+				// preventing start of text selection
+				event.preventDefault();
+				event.stopPropagation();
+				// ... will also prevent focus handling, so remove focus explicitly
+				$(':focus').blur();
+				
+				var startPosition = wicketdnd.position(event);
+				
+				$(document).on('mousemove.wicketdnd', function(event) {
+					event.preventDefault();
+					event.stopPropagation();
+
+					var distance = wicketdnd.distance(wicketdnd.position(event), startPosition);
+					if (distance >= wicketdnd.THRESHOLD) {
+						$(document).off('.wicketdnd');
+
+						onDetected();
+					}
+				});
+
+				$(document).on('mouseup.wicketdnd', function(event) {
+					$(document).off('.wicketdnd');
+				});
+			}			
 		};
 	}		
 })();
