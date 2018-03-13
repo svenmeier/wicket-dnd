@@ -17,8 +17,6 @@
 
 			COPY : 17,
 			
-			DROP_TARGET_PREFIX : 'dropTarget_',
-			
 			dragSource: function(id, behavior, componentPath, operations, types, selectors) {
 				var element = Wicket.$(id);
 
@@ -247,7 +245,7 @@
 			dropTarget: function(id, attrs, operations, types, selectors) {
 				var element = Wicket.$(id);
 
-				$(element).data(wicketdnd.DROP_TARGET_PREFIX + id, {
+				wicketdnd.targets(element).push({
 					'operations' : operations,
 					'types' : types,
 					'selectors' : selectors,
@@ -386,31 +384,31 @@
 					return location;
 				};
 			},
+			
+			targets: function(element) {
+				var targets = $(element).data('dropTarget');
+				if (!targets) {
+					targets = [];
+					$(element).data('dropTarget', targets);
+				}
+				return targets;
+			},
 
 			findTarget: function(types, event) {
 
 				var element = event.target;
 				while (element) {
-					var target = undefined;
-					
-					$.each($(element).data(), function(key, value) {
-						if (key.indexOf(wicketdnd.DROP_TARGET_PREFIX) == 0) {
-							var intersection = types.filter(function(type) {
-							    return value.types.indexOf(type) != -1;
-							});
-							
-							if (intersection.length > 0) {
-								target = value;
-								// stop loop
-								return false;
-							}
+					var targets = wicketdnd.targets(element);
+					for (var t = 0; t < targets.length; t++) {
+						var intersection = types.filter(function(type) {
+						    return targets[t].types.indexOf(type) != -1;
+						});
+						
+						if (intersection.length > 0) {
+							return targets[t];
 						}
-					});
-
-					if (target) {
-						return target;
 					}
-					
+
 					element = element.parentNode;
 				}
 

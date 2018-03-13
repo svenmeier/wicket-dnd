@@ -239,8 +239,6 @@ public class DragSource extends Behavior
 	 * 
 	 * @param drag
 	 *            component to get data from
-	 * @param operation
-	 *            the drag's operation
 	 * @param transfer
 	 *            the transfer
 	 * @throws Reject
