@@ -18,10 +18,11 @@ package wicketdnd.examples;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -89,18 +90,18 @@ public class ExamplePage extends WebPage
 		});
 		add(form);
 
-		form.add(new DropDownChoice<Behavior>("theme",
+		DropDownChoice<Behavior> themeChoice = new DropDownChoice<Behavior>("theme",
 				new PropertyModel<Behavior>(this, "theme"), initThemes(),
-				new ChoiceRenderer<Behavior>("class.simpleName"))
+				new ChoiceRenderer<Behavior>("class.simpleName"));
+		themeChoice.add(new AjaxFormComponentUpdatingBehavior("change")
 		{
-			private static final long serialVersionUID = 1L;
-
 			@Override
-			protected boolean wantOnSelectionChangedNotifications()
+			protected void onUpdate(AjaxRequestTarget target)
 			{
-				return true;
+				target.add(getPage());
 			}
 		});
+		form.add(themeChoice);
 
 		RepeatingView examples = new RepeatingView("examples");
 		examples.add(new LabelExample(examples.newChildId()));
