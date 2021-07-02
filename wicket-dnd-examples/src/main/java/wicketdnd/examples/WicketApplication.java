@@ -30,6 +30,8 @@ public class WicketApplication extends WebApplication
 	protected void init()
 	{
 		getMarkupSettings().setStripWicketTags(true);
+		
+		getCspSettings().blocking().disabled();
 	}
 
 	public Class<ExamplePage> getHomePage()

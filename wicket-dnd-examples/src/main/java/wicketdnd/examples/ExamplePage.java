@@ -34,8 +34,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.PropertyModel;
 
-import wicketdnd.IEBackgroundImageCacheFix;
-import wicketdnd.IECursorFix;
 import wicketdnd.theme.HumanTheme;
 import wicketdnd.theme.WebTheme;
 import wicketdnd.theme.WindowsTheme;
@@ -54,9 +52,6 @@ public class ExamplePage extends WebPage
 
 	public ExamplePage()
 	{
-		add(new IECursorFix());
-		add(new IEBackgroundImageCacheFix());
-
 		add(new WebMarkupContainer("performance") {
 			@Override
 			protected void onConfigure()

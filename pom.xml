@@ -18,8 +18,8 @@
 	</licenses>
 
 	<properties>
-		<wicket.version>8.12.0</wicket.version>
-		<wicketstuff.version>8.12.0</wicketstuff.version>
+		<wicket.version>9.3.0</wicket.version>
+		<wicketstuff.version>9.3.0</wicketstuff.version>
 		<jetty.version>9.4.41.v20210516</jetty.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
@@ -91,8 +91,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.9</source>
-					<target>1.9</target>
+					<source>9</source>
+					<target>9</target>
 					<optimize>true</optimize>
 					<debug>true</debug>
 				</configuration>
