@@ -29,7 +29,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.string.Strings;
@@ -67,16 +66,12 @@ public abstract class Example extends Panel
 		dragOperations.addAll(operations);
 		dropOperations.addAll(operations);
 
-		add(new Label("title", new AbstractReadOnlyModel<String>()
-		{
-			@Override
-			public String getObject()
-			{
+		add(new Label("title", () -> {
 				String name = Example.this.getClass().getSimpleName();
 
 				return name.substring(0, name.indexOf("Example"));
 			}
-		}));
+		));
 
 		final WebMarkupContainer controls = new WebMarkupContainer("controls",
 				new CompoundPropertyModel<Example>(this));
