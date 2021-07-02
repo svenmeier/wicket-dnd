@@ -48,11 +48,13 @@
 					var copy = false;
 
 					var hover = createHover(id);
+					$('body').append(hover);
+
+					// can be evaluated after being appended only
 					var fixedPosition = hover.css("position") === "fixed";
 					if (fixedPosition) {
+						// fixed position allows element to be added to container and inherit styles 
 						$(element).append(hover);
-					} else {
-						$('body').append(hover);
 					}
 
 					mark(id);
